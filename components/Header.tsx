@@ -8,12 +8,23 @@ function Header() {
     const [isScroll, setIsScroll] = useState(false)
 
     useEffect(() => {
+      const handlescroll = () => {
+        if (window.scrollY > 0) {
+          setIsScroll(true)
+        } else {
+          setIsScroll(false)
+        }
+      }
 
+      window.addEventListener('scroll', handlescroll)
+      return () => {
+        window.removeEventListener('scroll', handlescroll)
+      }
     },[])
 
-    
+
   return (
-    <header>
+    <header className={`${isScroll && "bg-[#141414]"}`}>
     <div className="flex  items-center space-x-2 md:space-x-10">
     <img
           src="https://rb.gy/ulxxee"
