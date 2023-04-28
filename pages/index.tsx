@@ -5,6 +5,10 @@ import Header from '@/components/Header'
 import Banner from '@/components/Banner'
 import { Movie } from '@/typings'
 import Row from '@/components/Row'
+import useAuth  from '@/hooks/useAuth'
+import { useRecoilValue } from 'recoil'
+import { modalState } from '@/atoms/modalAtom'
+import Modal from '@/components/Modal'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,7 +33,10 @@ export default function Home({netflixOriginals,
   topRated,
   trendingNow,
 }: Props) {
-  
+  const { loading} = useAuth()
+  const showModal = useRecoilValue(modalState)
+
+  if(loading) return null
 
 
   return (
@@ -51,7 +58,6 @@ export default function Home({netflixOriginals,
           <Row title="Action Thrillers" movies={actionMovies} />
           {/* My List  Component*/}
          
-
           <Row title="Comedies" movies={comedyMovies} />
           <Row title="Scary Movies" movies={horrorMovies} />
           <Row title="Romance Movies" movies={romanceMovies} />
@@ -59,6 +65,7 @@ export default function Home({netflixOriginals,
         </section>
       </main>
       {/* Modal  */}
+      {showModal &&  <Modal />}
     </div>
   )
 }
